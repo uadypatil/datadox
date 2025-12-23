@@ -1,0 +1,180 @@
+Smart Ticketing System:
+system to manage ticketing inside the organization or industry with the incedent management and tracking system.
+in this system we are managing tickets with some data. first have a look on structure first.
+
+system is having:
+organizations: (organization registration and login){
+organization will have branches(for multiple locations), departments(specifically for branches), roles(inside the department), employee(empoyee will be crated for specific role).
+
+category and sub_categories for ticketing:
+ticketing management will have categories(like hardware, software, incedent or any other) and sub category (like mouse, keyboad or else).
+
+along with all this data the ticket will be created.
+now the ticket is being created for department like when employee is raising ticket then it should to be raised for department or individually. (in database we have to maintain the state as DEPARTMENT/INDIVIDUALLY). we have to maintain the reference data accordingly.
+ticket is having base data like:
+id, subject, description, attachments, category & sub category
+
+in reference data the ticket shold have:
+from raised{
+userid/employee id
+dep id
+branch id
+more needy references
+}
+
+and to raised{
+department/individually (status)
+raised department id/raised employee id
+option to raise copy(RC) which will share this ticket's copy with another person too
+option to raise hidden copy(RHC) which will share this ticket copy with the person but in hidden format.
+
+
+along with all this data we have to maintain the states:
+RAISED | PENDING | WORKING_ON_IT | CLOSED | REJECTED | APPROVED | DELIVERED | and more needy status. 
+
+yet this is all about the ticket we have to maintain the ticket state as RETURNED | RELEASED | REPLYED
+to whom the ticket is raised can reply to the ticket, at the time it will go in replyed/ returned. when ticket is raised then the both nodes can have communication with each other until the ticket is closed.
+
+if the ticket is closed/ cancelled/ rejected then the feedback should be raised
+
+if he replyed/ returned/ responded then the from person can send the message and there shoud be communication in between both. find the fields or data to handle this communication
+}
+
+
+------------------------------------------------------------------------------------------------------
+
+Ticket Creation Model:
+Ticket Base:
+ticket id, subject, description, attachments, category, sub category, assignment type(DEPARTMENT/INDIVIDUAL)
+
+Ticket references:
+ticket references from: 
+employee id/user id, department id, branch id, (device details)
+
+ticket references to:
+if raised to dept: ASSIGNED DEPARTMENT ID
+if raised to employee: ASSIGNED EMPLOYEE ID
+branch id, organiztion id
+
+Ticket Status management:
+RAISED, PENDING, WORKING_ON_IT, APPROVED, REJECTED, DILIVERED, CLOSED, RETURNED, RELEASED, TO_HIGHER_AUTHORITY, ON_HOLD, RESPONDED, ESCALATED.
+
+Ticket communication management:
+message text, message type, attachments, sender&receivers id and all
+
+
+------------------------------------------------------------------------------------------------------
+
+
+{
+  "_id": "uuid",
+  "subject": "...",
+  "description": "...",
+  "category_id": "uuid",
+  "sub_category_id": "uuid",
+  "assignment_type": "DEPARTMENT",
+
+  "from": {
+    "employee_id": "uuid",
+    "department_id": "uuid",
+    "branch_id": "uuid",
+    "device_details": {}
+  },
+
+  "to": {
+    "assigned_department_id": "uuid",
+    "assigned_employee_id": null,
+    "branch_id": "uuid",
+    "organization_id": "uuid"
+  },
+
+  "attachments": [],
+  "copy_options": {
+    "rc": [],
+    "rhc": []
+  },
+
+  "status": {
+    "current": "PENDING",
+    "history": [
+      {
+        "status": "RAISED",
+        "changed_by": "uuid",
+        "changed_at": "timestamp"
+      }
+    ]
+  },
+
+  "timestamps": {
+    "created_at": "timestamp",
+    "updated_at": "timestamp",
+    "deleted_at": "timestamp",
+    "closed_at": null
+  }
+}
+
+
+{
+  "id": "msg_123",
+  "ticket_id": "ticket_456",
+  "sender_id": "emp_001",
+  "receiver_ids": ["emp_002", "emp_003"],
+  "message_text": "Please provide additional details for the ticket.",
+  "attachments": [
+    {"file_name": "screenshot.png", "file_url": "..."}
+  ],
+  "message_type": "NORMAL",
+  "parent_message_id": null,
+  "status": "SENT",
+  "hidden": false,
+  "created_at": "2025-12-12T10:00:00Z",
+  "updated_at": "2025-12-12T10:00:00Z"
+}
+
+
+
+
+------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
